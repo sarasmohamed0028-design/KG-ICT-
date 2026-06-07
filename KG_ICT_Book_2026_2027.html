@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Computer Book 🖥️ — KG ICT 2026–2027</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ── ROOT & RESET ── */
+:root{
+  --sky:#4fc3f7; --navy:#1a237e; --gold:#ffb300; --coral:#ff6b6b;
+  --mint:#43e97b; --purple:#9c27b0; --pink:#e91e63; --orange:#ff9800;
+  --teal:#00bcd4; --green:#4caf50; --blue:#2196f3; --red:#f44336;
+  --cream:#fffde7; --soft:#f3f8ff; --white:#ffffff;
+  --shadow:0 6px 24px rgba(0,0,0,.13);
+  --r:20px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Nunito',sans-serif;
+  background:linear-gradient(135deg,#e3f2fd 0%,#f3e5f5 50%,#e8f5e9 100%);
+  min-height:100vh; cursor:default;
+}
+
+/* ── CUSTOM CURSOR ── */
+body{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Ctext y='26' font-size='26'%3E🖱️%3C/text%3E%3C/svg%3E") 8 8, auto;}
+
+/* ── FLOATING STARS BG ── */
+.stars-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.star{position:absolute;font-size:18px;animation:drift linear infinite;opacity:.18;}
+@keyframes drift{0%{transform:translateY(100vh) rotate(0deg);}100%{transform:translateY(-120px) rotate(360deg);}}
+
+/* ── NAV BAR ── */
+.navbar{
+  position:sticky;top:0;z-index:100;
+  background:var(--navy);
+  padding:10px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  box-shadow:0 4px 20px rgba(0,0,0,.3);
+}
+.navbar .brand{
+  font-family:'Fredoka One',cursive;
+  font-size:20px;color:var(--gold);
+  display:flex;align-items:center;gap:8px;
+}
+.nav-units{display:flex;gap:6px;flex-wrap:wrap;}
+.nav-btn{
+  background:rgba(255,255,255,.12);
+  border:none;border-radius:50px;
+  color:white;font-family:'Nunito',sans-serif;
+  font-size:11px;font-weight:700;
+  padding:5px 12px;cursor:pointer;
+  transition:all .2s;
+}
+.nav-btn:hover,.nav-btn.active{background:var(--gold);color:var(--navy);}
+
+/* ── COVER PAGE ── */
+.cover{
+  position:relative;z-index:1;
+  min-height:95vh;
+  background:linear-gradient(160deg,#0d47a1,#1565c0,#0277bd);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;padding:40px 20px;
+  overflow:hidden;
+}
+.cover::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 30% 70%,rgba(255,179,0,.15),transparent 60%),
+             radial-gradient(circle at 80% 20%,rgba(76,195,247,.2),transparent 50%);
+}
+.cover-bubble{
+  position:absolute;border-radius:50%;
+  background:rgba(255,255,255,.06);
+  animation:pulse 4s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+.cb1{width:350px;height:350px;top:-80px;right:-80px;}
+.cb2{width:200px;height:200px;bottom:50px;left:-60px;}
+.cb3{width:130px;height:130px;bottom:120px;right:80px;animation-delay:-2s;}
+
+.cover-emoji{font-size:72px;margin-bottom:16px;animation:bounce 2s ease-in-out infinite;}
+@keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+
+.cover-title{
+  font-family:'Fredoka One',cursive;
+  font-size:clamp(42px,8vw,72px);
+  color:var(--white);
+  line-height:1.05;
+  text-shadow:0 4px 20px rgba(0,0,0,.3);
+}
+.cover-title span{color:var(--gold);}
+.cover-sub{
+  font-size:18px;font-weight:700;
+  color:#90caf9;margin:12px 0 8px;
+}
+.cover-school{
+  background:var(--gold);
+  color:var(--navy);
+  border-radius:50px;
+  padding:8px 24px;
+  font-size:13px;font-weight:900;
+  letter-spacing:.1em;margin-top:16px;
+}
+.cover-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:14px;margin-top:36px;max-width:520px;
+}
+.cover-card{
+  background:rgba(255,255,255,.13);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:16px;padding:16px 12px;
+  color:white;transition:transform .2s;
+}
+.cover-card:hover{transform:translateY(-4px);}
+.cover-card .cc-num{font-family:'Fredoka One',cursive;font-size:30px;color:var(--gold);}
+.cover-card .cc-lbl{font-size:10px;font-weight:700;color:#90caf9;text-transform:uppercase;letter-spacing:.08em;}
+
+/* ── UNIT SECTIONS ── */
+.unit-section{position:relative;z-index:1;padding:40px 20px;}
+.unit-header{
+  border-radius:var(--r) var(--r) 0 0;
+  padding:24px 32px;
+  display:flex;align-items:center;gap:16px;
+  position:relative;overflow:hidden;
+}
+.unit-header::after{
+  content:'';position:absolute;right:-30px;top:-30px;
+  width:130px;height:130px;border-radius:50%;
+  background:rgba(255,255,255,.1);
+}
+.unit-icon{font-size:48px;}
+.unit-header-text{}
+.unit-label{font-size:11px;font-weight:900;letter-spacing:.15em;color:rgba(255,255,255,.7);text-transform:uppercase;}
+.unit-title{font-family:'Fredoka One',cursive;font-size:28px;color:white;}
+.unit-month{font-size:12px;color:rgba(255,255,255,.65);font-weight:700;margin-top:4px;}
+
+.unit-body{
+  background:white;
+  border-radius:0 0 var(--r) var(--r);
+  padding:28px;
+  box-shadow:var(--shadow);
+}
+
+/* ── LESSON CARDS ── */
+.lesson-card{
+  border-radius:14px;padding:20px;margin-bottom:16px;
+  border-left:5px solid transparent;
+  background:var(--soft);
+  transition:transform .15s, box-shadow .15s;
+}
+.lesson-card:hover{transform:translateX(4px);box-shadow:var(--shadow);}
+.lesson-week{font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px;}
+.lesson-title{font-family:'Fredoka One',cursive;font-size:19px;margin-bottom:6px;}
+.lesson-intro{font-size:13px;color:#555;line-height:1.6;margin-bottom:12px;}
+
+/* ── ACTIVITY BOXES ── */
+.activity-box{
+  border-radius:12px;padding:16px;margin:10px 0;
+  position:relative;
+}
+.activity-tag{
+  display:inline-block;
+  border-radius:50px;padding:3px 12px;
+  font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;
+  margin-bottom:8px;
+}
+.activity-title{font-family:'Fredoka One',cursive;font-size:16px;margin-bottom:6px;}
+.activity-desc{font-size:12.5px;line-height:1.6;color:#444;}
+
+/* activity types */
+.act-learn{background:#e3f2fd;border:2px dashed #2196f3;}
+.act-learn .activity-tag{background:#2196f3;color:white;}
+.act-learn .activity-title{color:#0d47a1;}
+.act-game{background:#fff3e0;border:2px dashed #ff9800;}
+.act-game .activity-tag{background:#ff9800;color:white;}
+.act-game .activity-title{color:#e65100;}
+.act-practice{background:#e8f5e9;border:2px dashed #4caf50;}
+.act-practice .activity-tag{background:#4caf50;color:white;}
+.act-practice .activity-title{color:#1b5e20;}
+.act-quiz{background:#fce4ec;border:2px dashed #e91e63;}
+.act-quiz .activity-tag{background:#e91e63;color:white;}
+.act-quiz .activity-title{color:#880e4f;}
+.act-creative{background:#f3e5f5;border:2px dashed #9c27b0;}
+.act-creative .activity-tag{background:#9c27b0;color:white;}
+.act-creative .activity-title{color:#4a148c;}
+
+/* ── INTERACTIVE ELEMENTS ── */
+.big-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--gold);color:var(--navy);
+  border:none;border-radius:50px;
+  padding:10px 22px;font-family:'Fredoka One',cursive;
+  font-size:15px;cursor:pointer;
+  box-shadow:0 4px 14px rgba(255,179,0,.4);
+  transition:all .2s;margin:4px;
+}
+.big-btn:hover{transform:scale(1.06);box-shadow:0 6px 20px rgba(255,179,0,.5);}
+.big-btn.blue{background:var(--blue);color:white;box-shadow:0 4px 14px rgba(33,150,243,.35);}
+.big-btn.green{background:var(--green);color:white;box-shadow:0 4px 14px rgba(76,175,80,.35);}
+.big-btn.pink{background:var(--pink);color:white;box-shadow:0 4px 14px rgba(233,30,99,.35);}
+.big-btn.purple{background:var(--purple);color:white;}
+
+/* Quiz */
+.quiz-q{font-family:'Fredoka One',cursive;font-size:16px;color:#333;margin-bottom:10px;}
+.quiz-opts{display:flex;flex-wrap:wrap;gap:8px;}
+.quiz-opt{
+  border:3px solid #ddd;background:white;border-radius:12px;
+  padding:10px 16px;font-size:13px;font-weight:700;
+  cursor:pointer;transition:all .2s;font-family:'Nunito',sans-serif;
+}
+.quiz-opt:hover{border-color:var(--blue);background:#e3f2fd;}
+.quiz-opt.correct{background:#e8f5e9;border-color:var(--green);color:#1b5e20;}
+.quiz-opt.wrong{background:#ffebee;border-color:var(--red);color:#b71c1c;}
+.quiz-feedback{
+  margin-top:10px;padding:10px 14px;border-radius:10px;
+  font-weight:700;font-size:13px;display:none;
+}
+.quiz-feedback.show{display:block;}
+.quiz-feedback.good{background:#e8f5e9;color:#2e7d32;}
+.quiz-feedback.bad{background:#ffebee;color:#c62828;}
+
+/* Click-to-reveal */
+.reveal-card{
+  background:#fff9c4;border:3px dashed var(--gold);
+  border-radius:14px;padding:16px;text-align:center;
+  cursor:pointer;transition:all .2s;margin:8px 0;
+}
+.reveal-card:hover{transform:scale(1.02);background:#fff8b0;}
+.reveal-card .reveal-hint{font-size:12px;color:#888;font-weight:700;}
+.reveal-card .reveal-content{display:none;font-size:14px;font-weight:700;color:#333;margin-top:8px;}
+.reveal-card.open .reveal-content{display:block;}
+.reveal-card.open .reveal-hint{display:none;}
+
+/* Drag & Drop area */
+.drag-area{
+  background:#f5f5f5;border:3px dashed #bbb;
+  border-radius:14px;padding:16px;min-height:80px;
+  display:flex;flex-wrap:wrap;gap:8px;align-items:center;
+  transition:background .2s;
+}
+.drag-area.over{background:#e3f2fd;border-color:var(--blue);}
+.drag-item{
+  background:white;border:2px solid #ddd;border-radius:10px;
+  padding:8px 14px;font-size:13px;font-weight:700;
+  cursor:grab;user-select:none;transition:transform .15s;
+  display:flex;align-items:center;gap:6px;
+}
+.drag-item:hover{transform:scale(1.05);box-shadow:var(--shadow);}
+.drag-item:active{cursor:grabbing;}
+
+/* Type-in practice */
+.type-box{
+  width:100%;border:3px solid #ddd;border-radius:12px;
+  padding:12px 16px;font-size:16px;font-family:'Fredoka One',cursive;
+  color:var(--navy);outline:none;transition:border .2s;
+  background:white;
+}
+.type-box:focus{border-color:var(--blue);}
+
+/* Color picker activity */
+.color-picker-row{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0;}
+.color-swatch{
+  width:44px;height:44px;border-radius:50%;
+  border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,.2);
+  cursor:pointer;transition:transform .2s;
+}
+.color-swatch:hover{transform:scale(1.2);}
+.color-swatch.selected{border-color:var(--navy);transform:scale(1.15);}
+
+/* Drawing canvas */
+.canvas-wrap{
+  background:white;border:3px solid #ddd;border-radius:14px;
+  overflow:hidden;position:relative;
+}
+canvas{display:block;touch-action:none;}
+.canvas-tools{
+  display:flex;gap:6px;padding:8px;
+  background:#f5f5f5;border-top:2px solid #ddd;
+  flex-wrap:wrap;align-items:center;
+}
+.tool-btn{
+  background:white;border:2px solid #ddd;border-radius:8px;
+  padding:5px 10px;font-size:11px;font-weight:700;
+  cursor:pointer;transition:all .15s;
+}
+.tool-btn:hover,.tool-btn.active{background:var(--navy);color:white;border-color:var(--navy);}
+
+/* ── MATCH GAME ── */
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.match-col{display:flex;flex-direction:column;gap:6px;}
+.match-item{
+  background:white;border:3px solid #ddd;border-radius:10px;
+  padding:10px 14px;font-size:13px;font-weight:700;
+  cursor:pointer;transition:all .2s;text-align:center;
+}
+.match-item:hover{border-color:var(--blue);background:#e3f2fd;}
+.match-item.selected{border-color:var(--gold);background:#fff9c4;}
+.match-item.matched{border-color:var(--green);background:#e8f5e9;cursor:default;}
+.match-item.wrong{border-color:var(--red);background:#ffebee;animation:shake .3s;}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-5px);}75%{transform:translateX(5px);}}
+
+/* ── PROGRESS ── */
+.progress-bar{
+  background:#eee;border-radius:50px;height:14px;margin:6px 0 12px;overflow:hidden;
+}
+.progress-fill{
+  height:100%;border-radius:50px;
+  background:linear-gradient(90deg,var(--mint),var(--teal));
+  transition:width .4s ease;
+}
+
+/* ── UNIT COLOR THEMES ── */
+.u1-hdr{background:linear-gradient(135deg,#1565c0,#0288d1);}
+.u1-hdr .lesson-card{border-left-color:#0288d1;}
+.u2-hdr{background:linear-gradient(135deg,#2e7d32,#388e3c);}
+.u2-card{border-left-color:#388e3c!important;}
+.u3-hdr{background:linear-gradient(135deg,#e65100,#f57c00);}
+.u3-card{border-left-color:#f57c00!important;}
+.u4-hdr{background:linear-gradient(135deg,#880e4f,#c2185b);}
+.u4-card{border-left-color:#c2185b!important;}
+.u5-hdr{background:linear-gradient(135deg,#4a148c,#7b1fa2);}
+.u5-card{border-left-color:#7b1fa2!important;}
+.u6-hdr{background:linear-gradient(135deg,#006064,#00838f);}
+.u6-card{border-left-color:#00838f!important;}
+
+/* ── PARTS DIAGRAM ── */
+.parts-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:12px 0;}
+.part-card{
+  background:white;border-radius:14px;padding:16px;
+  box-shadow:var(--shadow);text-align:center;
+  border-top:4px solid transparent;transition:transform .2s;
+}
+.part-card:hover{transform:translateY(-3px);}
+.part-emoji{font-size:40px;margin-bottom:8px;}
+.part-name{font-family:'Fredoka One',cursive;font-size:18px;color:var(--navy);}
+.part-desc{font-size:11px;color:#666;line-height:1.5;margin-top:4px;}
+
+/* ── ALPHABET KEYBOARD ── */
+.keyboard-demo{
+  background:#2d2d2d;border-radius:14px;padding:16px;
+  display:flex;flex-direction:column;gap:6px;margin:12px 0;
+}
+.kb-row{display:flex;gap:5px;justify-content:center;}
+.key{
+  background:#4a4a4a;border-radius:8px;
+  width:36px;height:36px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:900;color:white;
+  cursor:pointer;transition:all .15s;
+  border-bottom:3px solid #222;
+  user-select:none;
+}
+.key:hover,.key.pressed{background:var(--sky);transform:translateY(2px);border-bottom-width:1px;}
+.key.special{width:auto;padding:0 10px;font-size:10px;background:#555;color:#ccc;}
+.key.highlight{background:var(--gold);color:var(--navy);}
+
+/* ── PAINT PALETTE ── */
+.palette{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0;}
+.p-color{
+  width:36px;height:36px;border-radius:8px;
+  cursor:pointer;border:3px solid transparent;
+  transition:all .2s;
+}
+.p-color:hover,.p-color.active{border-color:var(--navy);transform:scale(1.2);}
+
+/* ── CERTIFICATE ── */
+.certificate{
+  background:linear-gradient(135deg,#fffde7,#fff9c4);
+  border:6px double var(--gold);border-radius:20px;
+  padding:32px;text-align:center;margin:16px 0;
+  position:relative;overflow:hidden;
+}
+.certificate::before{
+  content:'⭐';position:absolute;font-size:100px;
+  opacity:.06;top:50%;left:50%;transform:translate(-50%,-50%);
+}
+.cert-title{font-family:'Fredoka One',cursive;font-size:28px;color:var(--navy);}
+.cert-sub{font-size:13px;color:#666;margin:6px 0 12px;}
+.cert-name{
+  font-family:'Fredoka One',cursive;font-size:36px;
+  color:var(--pink);border-bottom:3px dashed var(--gold);
+  padding:0 20px 4px;display:inline-block;min-width:200px;
+}
+.cert-seal{font-size:48px;margin-top:12px;}
+
+/* ── FUN FACTS ── */
+.fun-fact{
+  background:linear-gradient(135deg,#e3f2fd,#e8eaf6);
+  border-radius:14px;padding:14px 16px;margin:10px 0;
+  display:flex;gap:12px;align-items:flex-start;
+  border-left:5px solid var(--blue);
+}
+.fun-fact .ff-icon{font-size:28px;flex-shrink:0;}
+.fun-fact .ff-text{font-size:12.5px;color:#333;line-height:1.6;}
+.fun-fact .ff-title{font-family:'Fredoka One',cursive;font-size:15px;color:var(--navy);margin-bottom:4px;}
+
+/* ── STEP LIST ── */
+.steps{display:flex;flex-direction:column;gap:10px;margin:12px 0;}
+.step{
+  display:flex;gap:14px;align-items:flex-start;
+  background:white;border-radius:12px;padding:14px;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);
+}
+.step-num{
+  width:32px;height:32px;flex-shrink:0;border-radius:50%;
+  background:var(--navy);color:white;
+  font-family:'Fredoka One',cursive;font-size:16px;
+  display:flex;align-items:center;justify-content:center;
+}
+.step-text{font-size:13px;line-height:1.6;color:#333;}
+.step-text strong{color:var(--navy);}
+
+/* ── WORD DISPLAY ── */
+.word-display{
+  font-family:'Fredoka One',cursive;
+  font-size:48px;letter-spacing:8px;
+  color:var(--navy);text-align:center;
+  padding:16px;background:var(--cream);
+  border-radius:14px;border:3px dashed var(--gold);
+  margin:10px 0;
+}
+
+/* ── EMOJI PICKER GAME ── */
+.emoji-bank{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0;}
+.emoji-pick{
+  font-size:30px;cursor:pointer;
+  padding:6px;border-radius:10px;
+  transition:transform .2s;
+  user-select:none;
+}
+.emoji-pick:hover{transform:scale(1.3);}
+
+/* ── SECTION DIVIDER ── */
+.divider{
+  text-align:center;padding:20px;font-size:28px;
+  letter-spacing:10px;color:rgba(0,0,0,.12);
+  user-select:none;
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:600px){
+  .cover-grid{grid-template-columns:1fr 1fr;}
+  .parts-grid{grid-template-columns:1fr;}
+  .match-grid{grid-template-columns:1fr;}
+}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;bottom:24px;right:24px;z-index:999;
+  background:var(--navy);color:white;
+  border-radius:14px;padding:12px 20px;
+  font-size:14px;font-weight:700;
+  box-shadow:var(--shadow);
+  transform:translateY(80px);opacity:0;
+  transition:all .3s;pointer-events:none;
+}
+.toast.show{transform:translateY(0);opacity:1;}
+
+/* ── CONFETTI CANVAS ── */
+#confetti-canvas{position:fixed;inset:0;pointer-events:none;z-index:998;}
+</style>
+</head>
+<body>
+
+<canvas id="confetti-canvas"></canvas>
+<div class="toast" id="toast">🎉 Great job!</div>
+
+<!-- Floating stars -->
+<div class="stars-bg" id="stars"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="brand">🖥️ My Computer Book</div>
+  <div class="nav-units">
+    <button class="nav-btn" onclick="scrollTo('cover')">🏠</button>
+    <button class="nav-btn" onclick="scrollTo('unit1')">U1</button>
+    <button class="nav-btn" onclick="scrollTo('unit2')">U2</button>
+    <button class="nav-btn" onclick="scrollTo('unit3')">U3</button>
+    <button class="nav-btn" onclick="scrollTo('unit4')">U4</button>
+    <button class="nav-btn" onclick="scrollTo('unit5')">U5</button>
+    <button class="nav-btn" onclick="scrollTo('unit6')">U6</button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════
+     COVER
+═══════════════════════ -->
+<section class="cover" id="cover">
+  <div class="cover-bubble cb1"></div>
+  <div class="cover-bubble cb2"></div>
+  <div class="cover-bubble cb3"></div>
+
+  <div class="cover-emoji">🖥️</div>
+  <h1 class="cover-title">My<br><span>Computer</span><br>Book!</h1>
+  <div class="cover-sub">A Fun Learning Adventure for Kindergarten 🌟</div>
+  <div class="cover-school">FANARAH SCHOOL · ICT · 2026–2027</div>
+
+  <div class="cover-grid">
+    <div class="cover-card"><div class="cc-num">6</div><div class="cc-lbl">Units</div></div>
+    <div class="cover-card"><div class="cc-num">23</div><div class="cc-lbl">Lessons</div></div>
+    <div class="cover-card"><div class="cc-num">2</div><div class="cc-lbl">Projects</div></div>
+  </div>
+  <div style="margin-top:28px;">
+    <button class="big-btn" onclick="scrollTo('unit1')">Let's Start! 🚀</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════
+     UNIT 1 — WELCOME TO THE LAB
+═══════════════════════ -->
+<section class="unit-section" id="unit1">
+  <div class="unit-header u1-hdr">
+    <div class="unit-icon">🏫</div>
+    <div class="unit-header-text">
+      <div class="unit-label">Unit 1</div>
+      <div class="unit-title">Welcome to the Lab &amp; Safety!</div>
+      <div class="unit-month">📅 September</div>
+    </div>
+  </div>
+  <div class="unit-body">
+
+    <!-- WEEK 1 -->
+    <div class="lesson-card" style="border-left-color:#0288d1">
+      <div class="lesson-week" style="color:#0288d1">⭐ Week 1</div>
+      <div class="lesson-title" style="color:#0d47a1">Lab Tour &amp; Hello Computer!</div>
+      <div class="lesson-intro">Welcome to your computer class! 🎉 Today we visit the computer lab for the very first time. A computer lab is a special room full of computers — just like a magic learning playground!</div>
+
+      <div class="activity-box act-learn">
+        <div class="activity-tag">📖 Let's Learn</div>
+        <div class="activity-title">What Is a Computer Lab?</div>
+        <div class="activity-desc">A computer lab is a room with many computers. Everyone gets their own computer to use. It is a place where we learn, play, and create with technology! 🌈</div>
+      </div>
+
+      <div class="fun-fact">
+        <div class="ff-icon">💡</div>
+        <div><div class="ff-title">Fun Fact!</div><div class="ff-text">The very first computer was so big it could fill an entire room — bigger than your whole classroom! Now computers fit in your pocket! 😲</div></div>
+      </div>
+
+      <div class="activity-box act-game">
+        <div class="activity-tag">🎮 Lab Golden Rules Game</div>
+        <div class="activity-title">The Lab Rules Song 🎵</div>
+        <div class="activity-desc" style="font-size:13px;">Sing along and clap! 👏<br><br>
+        <em>"Walk quietly, don't run around, 🚶<br>
+        Keep the computers safe and sound, 💻<br>
+        No food, no drinks, no juice today, 🧃<br>
+        Clean hands before we start to play! 🙌<br>
+        Be kind, be gentle, have some fun,<br>
+        Learning time has just BEGUN!" 🌟</em></div>
+      </div>
+
+      <div class="activity-box act-quiz">
+        <div class="activity-tag">🧠 Quick Quiz</div>
+        <div class="activity-title">Lab Rules Check!</div>
+        <div class="quiz-q">Can you bring food into the computer lab?</div>
+        <div class="quiz-opts">
+          <div class="quiz-opt" onclick="answer(this,'no')">🍕 Yes, pizza is fine!</div>
+          <div class="quiz-opt" onclick="answer(this,'yes')">🚫 No! No food allowed!</div>
+        </div>
+        <div class="quiz-feedback" id="qf0"></div>
+      </div>
+    </div>
+
+    <!-- WEEK 2 -->
+    <div class="lesson-card" style="border-left-color:#0288d1">
+      <div class="lesson-week" style="color:#0288d1">⭐ Week 2</div>
+      <div class="lesson-title" style="color:#0d47a1">Sitting Like a Superhero! 🦸</div>
+      <div class="lesson-intro">Did you know that how you sit at the computer is very important? Sitting correctly keeps your back healthy and your eyes safe. Let's learn how to sit like a superhero!</div>
+
+      <div class="activity-box act-learn">
+        <div class="activity-tag">📖 Let's Learn</div>
+        <div class="activity-title">The Perfect Computer Posture</div>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Sit up straight!</strong> Keep your back touching the back of the chair. Imagine there is a string pulling the top of your head up! ⬆️</div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Feet flat on the floor</strong> — both feet touch the ground. No dangling! 🦶</div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Eyes level with the screen</strong> — the screen should be straight in front of you, not too high, not too low. 👀</div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Arms relaxed</strong> — let your elbows bend softly. Your hands rest gently on the table. 🤲</div></div>
+        </div>
+      </div>
+
+      <div class="activity-box act-practice">
+        <div class="activity-tag">✏️ Practice</div>
+        <div class="activity-title">Posture Check! ✅</div>
+        <div class="activity-desc">Click each item when you do it correctly right now!</div>
+        <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px;" id="posture-checks">
+          <label style="display:flex;gap:10px;align-items:center;cursor:pointer;font-size:13px;font-weight:700;">
+            <input type="checkbox" style="width:18px;height:18px;" onchange="checkPosture()"> My back is straight ⬆️
+          </label>
+          <label style="display:flex;gap:10px;align-items:center;cursor:pointer;font-size:13px;font-weight:700;">
+            <input type="checkbox" style="width:18px;height:18px;" onchange="checkPosture()"> My feet are flat on the floor 🦶
+          </label>
+          <label style="display:flex;gap:10px;align-items:center;cursor:pointer;font-size:13px;font-weight:700;">
+            <input type="checkbox" style="width:18px;height:18px;" onchange="checkPosture()"> My eyes are level with the screen 👀
+          </label>
+          <label style="display:flex;gap:10px;align-items:center;cursor:pointer;font-size:13px;font-weight:700;">
+            <input type="checkbox" style="width:18px;height:18px;" onchange="checkPosture()"> My arms are relaxed 🤲
+          </label>
+        </div>
+        <div id="posture-msg" style="margin-top:10px;font-weight:700;font-size:13px;"></div>
+      </div>
+    </div>
+
+    <!-- WEEK 3 -->
+    <div class="lesson-card" style="border-left-color:#0288d1">
+      <div class="lesson-week" style="color:#0288d1">⭐ Week 3</div>
+      <div class="lesson-title" style="color:#0d47a1">Meet the Screen — Our TV Friend! 📺</div>
+      <div class="lesson-intro">Every computer has a screen! The screen is like a magic window that shows us everything the computer is doing. Let's get to know our screen!</div>
+
+      <div class="activity-box act-learn">
+        <div class="activity-tag">📖 Let's Learn</div>
+        <div class="activity-title">What Does a Screen Do?</div>
+        <div class="activity-desc">
+          The screen shows us:<br>
+          🖼️ &nbsp;<strong>Pictures and photos</strong><br>
+          ✍️ &nbsp;<strong>Words and letters</strong><br>
+          🎮 &nbsp;<strong>Games and activities</strong><br>
+          🎨 &nbsp;<strong>Drawings we make</strong><br><br>
+          The screen is <strong>delicate</strong> — never touch it with dirty hands or poke it hard!
+        </div>
+      </div>
+
+      <div class="activity-box act-game">
+        <div class="activity-tag">🎮 Activity</div>
+        <div class="activity-title">Touch or No Touch? 🤔</div>
+        <div class="activity-desc">Click 👍 or 👎 for each action:</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;">
+          <div style="display:flex;gap:8px;align-items:center;font-size:13px;font-weight:700;">
+            <span style="flex:1">Touching screen with clean finger gently</span>
+            <button class="big-btn green" style="padding:5px 12px;font-size:12px;" onclick="showToast('✅ Correct! Clean hands are OK!')">👍</button>
+            <button class="big-btn" style="background:#eee;color:#666;padding:5px 12px;font-size:12px;" onclick="showToast('🤔 Try again!')">👎</button>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;font-size:13px;font-weight:700;">
+            <span style="flex:1">Hitting the screen hard</span>
+            <button class="big-btn" style="background:#eee;color:#666;padding:5px 12px;font-size:12px;" onclick="showToast('🤔 Try again!')">👍</button>
+            <button class="big-btn pink" style="padding:5px 12px;font-size:12px;" onclick="showToast('✅ Never hit the screen!')">👎</button>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;font-size:13px;font-weight:700;">
+            <span style="flex:1">Drawing on the screen with a crayon</span>
+            <button class="big-btn" style="background:#eee;color:#666;padding:5px 12px;font-size:12px;" onclick="showToast('🤔 Try again!')">👍</button>
+            <button class="big-btn pink" style="padding:5px 12px;font-size:12px;" onclick="showToast('✅ No crayons on the screen!')">👎</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WEEK 4 -->
+    <div class="lesson-card" style="border-left-color:#0288d1">
+      <div class="lesson-week" style="color:#0288d1">⭐ Week 4</div>
+      <div class="lesson-title" style="color:#0d47a1">Good Habits Quiz Day! 🎓</div>
+      <div class="lesson-intro">You have learned so much this month! Let's test what you know with a fun quiz. Do your best — you've got this! 💪</div>
+
+      <div class="activity-box act-quiz">
+        <div class="activity-tag">🧠 Big Quiz</div>
+        <div class="activity-title">Unit 1 Review Quiz</div>
+
+        <div style="margin-bottom:14px;">
+          <div class="quiz-q">1. What should you do before using a computer?</div>
+          <div class="quiz-opts">
+            <div class="quiz-opt" onclick="answer(this,'yes')">🙌 Wash my hands</div>
+            <div class="quiz-opt" onclick="answer(this,'no')">🍔 Eat a burger</div>
+            <div class="quiz-opt" onclick="answer(this,'no')">💤 Take a nap</div>
+          </div>
+        </div>
+        <div style="margin-bottom:14px;">
+          <div class="quiz-q">2. How should you sit at the computer?</div>
+          <div class="quiz-opts">
+            <div class="quiz-opt" onclick="answer(this,'no')">🛋️ Lie down on a sofa</div>
+            <div class="quiz-opt" onclick="answer(this,'yes')">⬆️ Sit up straight</div>
+            <div class="quiz-opt" onclick="answer(this,'no')">🙃 Upside down!</div>
+          </div>
+        </div>
+        <div>
+          <div class="quiz-q">3. What is a computer screen like?</div>
+          <div class="quiz-opts">
+            <div class="quiz-opt" onclick="answer(this,'yes')">📺 A magic window that shows things</div>
+            <div class="quiz-opt" onclick="answer(this,'no')">🪨 A rock</div>
+            <div class="quiz-opt" onclick="answer(this,'no')">🍰 A piece of cake</div>
+          </div>
+        </div>
+        <div style="margin-top:14px;">
+          <button class="big-btn green" onclick="showToast('🌟 Unit 1 Complete! Amazing!')">Finish Unit 1! 🏆</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /unit-body -->
+</section>
+
+<!-- ═══════════════════════
+     UNIT 2 — THE MOUSE
+═══════════════════════ -->
+<section class="unit-section" id="unit2">
+  <div class="unit-header u2-hdr">
+    <div class="unit-icon">🖱️</div>
+    <div class="unit-header-text">
+      <div class="unit-label">Unit 2</div>
+      <div class="unit-title">The Computer Brain &amp; The Mouse!</div>
+      <div class="unit-month">📅 October – November</div>
+    </div>
+  </div>
+  <div class="unit-body">
+
+    <!-- WEEK 1 -->
+    <div class="lesson-card u2-card">
+      <div class="lesson-week" style="color:#2e7d32">🖱️ Week 1</div>
+      <div class="lesson-title" style="color:#1b5e20">The Case — Where the Brain Lives! 🧠</div>
+      <div class="lesson-intro">A computer has many parts. Today we meet the most important one — the computer case! This is where the computer's brain lives. Let's explore!</div>
+
+      <div class="parts-grid">
+        <div class="part-card" style="border-top-color:#2196f3">
+          <div class="part-emoji">🖥️</div>
+          <div class="part-name">The Screen</div>
+          <div class="part-desc">Shows us everything! Like a magic window. 🪟</div>
+        </div>
+        <div class="part-card" style="border-top-color:#4caf50">
+          <div class="part-emoji">🗃️</div>
+          <div class="part-name">The Case</div>
+          <div class="part-desc">The computer's body. The brain lives inside! 🧠</div>
+        </div>
+        <div class="part-card" style="border-top-color:#ff9800">
+          <div class="part-emoji">🖱️</div>
+          <div class="part-name">The Mouse</div>
+          <div class="part-desc">Our digital hand! Moves the arrow on screen. 👆</div>
+        </div>
+        <div class="part-card" style="border-top-color:#e91e63">
+          <div class="part-emoji">⌨️</div>
+          <div class="part-name">The Keyboard</div>
+          <div class="part-desc">Magic buttons! We type letters and numbers. ✍️</div>
+        </div>
+      </div>
+
+      <div class="activity-box act-game">
+        <div class="activity-tag">🎮 Match Game</div>
+        <div class="activity-title">Match the Part to its Job!</div>
+        <div class="activity-desc" style="margin-bottom:10px;">Click a part, then click its matching job!</div>
+        <div class="match-grid">
+          <div class="match-col" id="match-parts">
+            <div class="match-item" data-id="screen" onclick="matchClick(this,'parts')">🖥️ Screen</div>
+            <div class="match-item" data-id="mouse" onclick="matchClick(this,'parts')">🖱️ Mouse</div>
+            <div class="match-item" data-id="keyboard" onclick="matchClick(this,'parts')">⌨️ Keyboard</div>
+            <div class="match-item" data-id="case" onclick="matchClick(this,'parts')">🗃️ Case</div>
+          </div>
+          <div class="match-col" id="match-jobs">
+            <div class="match-item" data-id="keyboard" onclick="matchClick(this,'jobs')">Types letters &amp; numbers ✍️</div>
+            <div class="match-item" data-id="case" onclick="matchClick(this,'jobs')">Holds the computer brain 🧠</div>
+            <div class="match-item" data-id="screen" onclick="matchClick(this,'jobs')">Shows pictures &amp; words 🪟</div>
+            <div class="match-item" data-id="mouse" onclick="matchClick(this,'jobs')">Moves the arrow 👆</div>
+          </div>
+        </div>
+        <div id="match-score" style="margin-top:10px;font-weight:700;font-size:13px;color:#2e7d32;"></div>
+      </div>
+
+      <div class="activity-box act-learn">
+        <div class="activity-tag">💡 The Magic Power Button</div>
+        <div class="activity-title">How to Turn On a Computer</div>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-text">Find the <strong>Power Button</strong> ⏻ on the computer case or screen. It usually has this symbol: ⏻</div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Press it once</strong> — gently! Don't hold it for too long.</div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-text">Wait patiently 🕐 — the computer needs a moment to wake up, just like you in the morning! 😴➡️😀</div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-text">When you see the <strong>desktop</strong> (the main screen), the computer is ready! 🎉</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WEEK 2 -->
+    <div class="lesson-card u2-card">
+      <div class="lesson-week" style="color:#2e7d32">🖱️ Week 2</div>
+      <div class="lesson-title" style="color:#1b5e20">Hello Mouse! Our Digital Hand! 👋</div>
+      <div class="lesson-intro">The mouse is one of the most important computer tools. It is like your hand inside the computer! When you move the mouse, an arrow moves on the screen. Let's learn how to hold it!</div>
+
+      <div class="activity-box act-learn">
+        <div class="activity-tag">📖 How to Hold the Mouse</div>
+        <div class="activity-title">The Right Way to Hold Your Mouse 🖱️</div>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-text">Place your <strong>palm gently on top</strong> of the mouse. It should feel comfortable, like holding a little pet! 🐭</div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-text">Your <strong>index finger</strong> (pointing finger) rests on the <strong>left button</strong>. This is the button you click most! 👆</div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-text">Your <strong>thumb</strong> rests on the left side. Your other fingers rest gently on the right side. 🤏</div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-text">Move the mouse <strong>slowly and smoothly</strong> — don't lift it in the air! Slide it on the mouse pad. 🎯</div></div>
+        </div>
+      </div>
+
+      <div class="activity-box act-game">
+        <div class="activity-tag">🎮 Memory Game</div>
+        <div class="activity-title">Mouse Parts — Tap to Reveal! 🕵️</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;">
+          <div class="reveal-card" onclick="this.classList.toggle('open')">
+            <div class="reveal-hint">👆 What does the LEFT button do? (tap to find out!)</div>
+            <div class="reveal-content">🖱️ The LEFT button is for <strong>clicking</strong>! You use it to select things, open files, and play games. It's the most important button!</div>
+          </div>
+          <div class="reveal-card" onclick="this.classList.toggle('open')">
+            <div class="reveal-hint">👆 What is the scroll wheel in the middle? (tap!)</div>
+            <div class="reveal-content">⚙️ The SCROLL WHEEL helps you <strong>go up and down</strong> on a page — like turning the pages of a book! Roll it with your finger.</div>
+          </div>
+          <div class="reveal-card" onclick="this.classList.toggle('open')">
+            <div class="reveal-hint">👆 Why do we use a mouse pad? (tap!)</div>
+            <div class="reveal-content">🟫 A MOUSE PAD gives the mouse a smooth, flat surface to slide on. It helps the mouse move accurately and protects the desk!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WEEK 3 -->
+    <div class="lesson-card u2-card">
+      <div class="lesson-week" style="color:#2e7d32">🖱️ Week 3</div>
+      <div class="lesson-title" style="color:#1b5e20">Moving the Mouse Arrow! ➡️</div>
+      <div class="lesson-intro">The arrow on the screen is called the <strong>cursor</strong>. When you move the mouse, the cursor moves too! Let's practice moving it around.</div>
+
+      <div class="activity-box act-practice">
+        <div class="activity-tag">✏️ Practice Time</div>
+        <div class="activity-title">Click the Stars! ⭐</div>
+        <div class="activity-desc" style="margin-bottom:10px;">Click all the stars as fast as you can!</div>
+        <div id="star-game" style="position:relative;height:160px;background:#e3f2fd;border-radius:12px;overflow:hidden;">
+          <div id="star-score" style="position:absolute;top:8px;right:12px;font-weight:900;font-size:13px;color:#0d47a1;">Stars: 0</div>
+        </div>
+        <button class="big-btn blue" style="margin-top:8px;" onclick="startStarGame()">Play! ⭐</button>
+      </div>
+
+      <div class="fun-fact">
+        <div class="ff-icon">🎯</div>
+        <div><div class="ff-title">Did You Know?</div><div class="ff-text">The cursor arrow usually points to the top-left. But when you hover over a link or button, it changes into a pointing hand! 👆 That means you can click it!</div></div>
+      </div>
+    </div>
+
+    <!-- WEEK 4 -->
+    <div class="lesson-card u2-card">
+      <div class="lesson-week" style="color:#2e7d32">🖱️ Week 4</div>
+      <div class="lesson-title" style="color:#1b5e20">My First Left Click! 🖱️ Click!</div>
+      <div class="lesson-intro">A click is when you press and release the left mouse button. Click — just one quick press! Let's practice. Ready? 🎯</div>
+
+      <div class="activity-box act-learn">
+        <div class="activity-tag">📖 Types of Clicks</div>
+        <div class="activity-title">Click, Click, Click! 🖱️</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px;">
+          <div style="background:#e3f2fd;border-radius:12px;padding:12px;text-align:center;">
+            <div style="font-size:28px">1️⃣</div>
+            <div style="font-family:'Fredoka One',cursive;font-size:15px;color:#0d47a1;">Single Click</div>
+            <div style="font-size:11px;color:#555;line-height:1.5;margin-top:4px;">Press once to <strong>select</strong> something. Like tapping to choose!</div>
+          </div>
+          <div style="background:#e8f5e9;border-radius:12px;padding:12px;text-align:center;">
+            <div style="font-size:28px">2️⃣</div>
+            <div style="font-family:'Fredoka One',cursive;font-size:15px;color:#1b5e20;">Double Click</div>
+            <div style="font-size:11px;color:#555;line-height:1.5;margin-top:4px;">Press TWICE quickly to <strong>open</strong> a file or program!</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="activity-box act-practice">
+        <div class="activity-tag">✏️ Click Practice</div>
+        <div class="activity-title">Pop the Balloons! 🎈</div>
+        <div class="activity-desc" style="margin-bottom:8px;">Click each balloon to pop it! Can you pop them all?</div>
+        <div id="balloon-area" style="display:flex;flex-wrap:wrap;gap:10px;padding:10px;background:#e3f2fd;border-radius:12px;min-height:80px;align-items:center;"></div>
+        <button class="big-btn" onclick="spawnBalloons()" style="margin-top:8px;">Make Balloons! 🎈</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════
+     UNIT 3 — KEYBOARD & WORD
+═══════════════════════ -->
+<section class="unit-section" id="unit3">
+  <div class="unit-header u3-hdr">
+    <div class="unit-icon">⌨️</div>
+    <div class="unit-header-text">
+      <div class="unit-label">Unit 3</div>
+      <div class="unit-title">Magic Keys &amp; Typing My Name!</div>
+      <div class="unit-month">📅 November – December</div>
+    </div>
+  </div>
+  <div class="unit-body">
+
+    <!-- WEEK 1 -->
+    <div class="lesson-card u3-card">
+      <div class="lesson-week" style="color:#e65100">⌨️ Week 1</div>
+      <div class="lesson-title" style="color:#bf360c">Open Microsoft Word! 📄</div>
+      <div class="lesson-intro">Microsoft Word is a program where we can type words, make sentences, and create our own documents! Think of it like a magical notebook on the computer. Let's open it!</div>
+
+      <div class="activity-box act-learn">
+        <div class="activity-tag">📖 Steps to Open Word</div>
+        <div class="activity-title">Opening Microsoft Word 🚀</div>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-text">Look at the screen. You will see the <strong>Desktop</strong> — this is the computer's home screen with small pictures called <strong>icons</strong>. 🏠</div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-text">Find the Microsoft Word icon — it looks like a blue letter <strong>"W"</strong>. It might be on the desktop or in the taskbar at the bottom. 🔵</div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Double-click</strong> the Word icon with your mouse — click twice, fast! 👆👆</div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-text">Wait a moment... Word will open! You'll see a big white page — that's where we will type. A <strong>blinking line</strong> shows where your text will appear! ▌</div></div>
+        </div>
+      </div>
+
+      <div class="fun-fact">
+        <div class="ff-icon">✨</div>
+        <div><div class="ff-title">The Blinking Cursor!</div><div class="ff-text">That little blinking line — ▌ — is called the <strong>cursor</strong>. It shows exactly where your letters will appear when you start typing. Watch it blink: blink, blink, blink! It's waiting for you to type! ⌨️</div></div>
+      </div>
+    </div>
+
+    <!-- WEEK 2 -->
+    <div class="lesson-card u3-card">
+      <div class="lesson-week" style="color:#e65100">⌨️ Week 2</div>
+      <div class="lesson-title" style="color:#bf360c">The Keyboard — Magic Buttons! ✨</div>
+      <div class="lesson-intro">The keyboard has lots of buttons called <strong>keys</strong>! Each key has a letter, number, or special symbol. Let's explore the keyboard and find the letters in YOUR name!</div>
+
+      <div class="activity-box act-learn">
+        <div class="activity-tag">📖 Special Keys</div>
+        <div class="activity-title">Important Keys to Know!</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
+          <div style="background:#fff3e0;border-radius:10px;padding:10px;text-align:center;">
+            <div style="font-size:22px">⎵</div>
+            <div style="font-family:'Fredoka One',cursive;font-size:14px;color:#e65100;">Spacebar</div>
+            <div style="font-size:11px;color:#555;">Makes a space between words! Like a jump! 🦘</div>
+          </div>
+          <div style="background:#e8f5e9;border-radius:10px;padding:10px;text-align:center;">
+            <div style="font-size:22px">⌫</div>
+            <div style="font-family:'Fredoka One',cursive;font-size:14px;color:#2e7d32;">Backspace</div>
+            <div style="font-size:11px;color:#555;">Erases the last letter! Magic eraser! 🧹</div>
+          </div>
+          <div style="background:#e3f2fd;border-radius:10px;padding:10px;text-align:center;">
+            <div style="font-size:22px">↵</div>
+            <div style="font-family:'Fredoka One',cursive;font-size:14px;color:#0d47a1;">Enter</div>
+            <div style="font-size:11px;color:#555;">Goes to a new line! Like pressing Enter on a new page! 📄</div>
+          </div>
+          <div style="background:#fce4ec;border-radius:10px;padding:10px;text-align:center;">
+            <div style="font-size:22px">⇧</div>
+            <div style="font-family:'Fredoka One',cursive;font-size:14px;color:#880e4f;">Shift</div>
+            <div style="font-size:11px;color:#555;">Makes letters CAPITAL — BIG letters! 🔠</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="activity-box act-practice">
+        <div class="activity-tag">✏️ Keyboard Practice</div>
+        <div class="activity-title">Click the Letters! 🔤</div>
+        <div class="activity-desc" style="margin-bottom:10px;">Click each key to see what it types!</div>
+        <div class="keyboard-demo">
+          <div class="kb-row">
+            <div class="key" onclick="typeKey('Q')">Q</div><div class="key" onclick="typeKey('W')">W</div><div class="key" onclick="typeKey('E')">E</div><div class="key" onclick="typeKey('R')">R</div><div class="key" onclick="typeKey('T')">T</div><div class="key" onclick="typeKey('Y')">Y</div><div class="key" onclick="typeKey('U')">U</div><div class="key" onclick="typeKey('I')">I</div><div class="key" onclick="typeKey('O')">O</div><div class="key" onclick="typeKey('P')">P</div>
+          </div>
+          <div class="kb-row">
+            <div class="key" onclick="typeKey('A')">A</div><div class="key" onclick="typeKey('S')">S</div><div class="key" onclick="typeKey('D')">D</div><div class="key" onclick="typeKey('F')">F</div><div class="key" onclick="typeKey('G')">G</div><div class="key" onclick="typeKey('H')">H</div><div class="key" onclick="typeKey('J')">J</div><div class="key" onclick="typeKey('K')">K</div><div class="key" onclick="typeKey('L')">L</div>
+          </div>
+          <div class="kb-row">
+            <div class="key" onclick="typeKey('Z')">Z</div><div class="key" onclick="typeKey('X')">X</div><div class="key" onclick="typeKey('C')">C</div><div class="key" onclick="typeKey('V')">V</div><div class="key" onclick="typeKey('B')">B</div><div class="key" onclick="typeKey('N')">N</div><div class="key" onclick="typeKey('M')">M</div><div class="key special" onclick="typeKey('⌫')">⌫</div>
+          </div>
+          <div class="kb-row">
+            <div class="key special" onclick="typeKey(' ')" style="width:180px;">SPACE ⎵</div>
+          </div>
+        </div>
+        <div id="kb-output" class="word-display" style="min-height:60px;word-break:break-all;">_</div>
+        <button class="big-btn" onclick="document.getElementById('kb-output').textContent='_'">Clear 🗑️</button>
+      </div>
+    </div>
+
+    <!-- WEEK 3 -->
+    <div class="lesson-card u3-card">
+      <div class="lesson-week" style="color:#e65100">⌨️ Week 3</div>
+      <div class="lesson-title" style="color:#bf360c">Type My First Name! ✍️</div>
+      <div class="lesson-intro">This is the most exciting lesson! Today you will type YOUR name on the computer for the very first time. Every letter you press will appear on the screen. This is YOUR moment! ⭐</div>
+
+      <div class="activity-box act-practice">
+        <div class="activity-tag">✏️ Name Practice</div>
+        <div class="activity-title">Type Your Name Here! 🌟</div>
+        <div class="activity-desc" style="margin-bottom:10px;">Type your name in the box below — use the real keyboard on your computer!</div>
+        <input class="type-box" id="name-input" placeholder="Type your name here... 📝" oninput="updateNameDisplay()" style="font-size:18px;">
+        <div id="name-display" class="word-display" style="margin-top:10px;min-height:60px;font-size:36px;letter-spacing:4px;">👤</div>
+        <button class="big-btn green" onclick="celebrateName()" style="margin-top:8px;">That's MY Name! 🎉</button>
+      </div>
+
+      <div class="fun-fact">
+        <div class="ff-icon">🌟</div>
+        <div><div class="ff-title">You're a Typist!</div><div class="ff-text">People who type on keyboards are called <strong>typists</strong>. Professional typists can type more than 60 words per minute — that's super fast! 🚀 You are starting your journey as a typist today!</div></div>
+      </div>
+    </div>
+
+    <!-- WEEK 4 — PROJECT -->
+    <div class="lesson-card u3-card">
+      <div class="lesson-week" style="color:#e65100">⌨️ Week 4</div>
+      <div class="lesson-title" style="color:#bf360c">Make My Name BIG &amp; Colorful! 🎨</div>
+      <div class="lesson-intro">Now let's make your name look AMAZING! In Microsoft Word, we can change how big our letters are and what color they are. Let's make your name a beautiful work of art!</div>
+
+      <div class="activity-box act-learn">
+        <div class="activity-tag">📖 Formatting</div>
+        <div class="activity-title">Make Words BIG!</div>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Select your name</strong> — click at the start, hold, and drag to the end. The selected text will be highlighted in blue! 🔵</div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-text">Find the <strong>font size box</strong> at the top of Word. It shows a number like "12". Click it and type <strong>"72"</strong> to make it giant! 🔢</div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-text">Now find the <strong>color button</strong> — it looks like an "A" with a colorful line under it. Click the arrow next to it to choose your favorite color! 🎨</div></div>
+        </div>
+      </div>
+
+      <div class="activity-box act-creative">
+        <div class="activity-tag">🎨 Name Art Studio</div>
+        <div class="activity-title">Design Your Name! ✨</div>
+        <div class="activity-desc" style="margin-bottom:10px;">Type your name and pick a color to preview it!</div>
+        <input class="type-box" id="nameArt" placeholder="Type your name..." oninput="updateNameArt()" style="margin-bottom:10px;">
+        <div class="color-picker-row" id="nameColorPicker">
+          <div class="color-swatch selected" style="background:#e91e63" onclick="selectNameColor(this,'#e91e63')"></div>
+          <div class="color-swatch" style="background:#2196f3" onclick="selectNameColor(this,'#2196f3')"></div>
+          <div class="color-swatch" style="background:#4caf50" onclick="selectNameColor(this,'#4caf50')"></div>
+          <div class="color-swatch" style="background:#ff9800" onclick="selectNameColor(this,'#ff9800')"></div>
+          <div class="color-swatch" style="background:#9c27b0" onclick="selectNameColor(this,'#9c27b0')"></div>
+          <div class="color-swatch" style="background:#f44336" onclick="selectNameColor(this,'#f44336')"></div>
+          <div class="color-swatch" style="background:#00bcd4" onclick="selectNameColor(this,'#00bcd4')"></div>
+        </div>
+        <div id="nameArtDisplay" style="font-family:'Fredoka One',cursive;font-size:52px;text-align:center;padding:16px;background:white;border-radius:14px;border:3px dashed #ddd;min-height:80px;color:#e91e63;margin-top:8px;word-break:break-all;">Your Name! ✨</div>
+      </div>
+
+      <!-- TERM 1 PROJECT -->
+      <div style="background:linear-gradient(135deg,#fff9c4,#fffde7);border:4px solid var(--gold);border-radius:16px;padding:20px;margin-top:16px;text-align:center;">
+        <div style="font-size:36px">🏆</div>
+        <div style="font-family:'Fredoka One',cursive;font-size:22px;color:var(--navy);margin-bottom:6px;">TERM 1 PROJECT!</div>
+        <div style="font-family:'Fredoka One',cursive;font-size:18px;color:#e65100;margin-bottom:8px;">"My Name on Word"</div>
+        <div style="font-size:12px;color:#555;line-height:1.6;max-width:400px;margin:0 auto;">
+          Open Microsoft Word. Type your first name. Make it HUGE (size 72)! Change its color to your favorite. Save and show the class your amazing creation! 🌟
+        </div>
+        <button class="big-btn" style="margin-top:12px;" onclick="launchConfetti();showToast('🏆 Project Complete! You are a STAR!')">I Did It! 🌟</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════
+     UNIT 4 — DRAG & DROP
+═══════════════════════ -->
+<section class="unit-section" id="unit4">
+  <div class="unit-header u4-hdr">
+    <div class="unit-icon">🧩</div>
+    <div class="unit-header-text">
+      <div class="unit-label">Unit 4</div>
+      <div class="unit-title">Click &amp; Drag Adventures!</div>
+      <div class="unit-month">📅 February</div>
+    </div>
+  </div>
+  <div class="unit-body">
+
+    <div class="lesson-card u4-card">
+      <div class="lesson-week" style="color:#880e4f">🧩 Week 1</div>
+      <div class="lesson-title" style="color:#560027">Welcome Back &amp; Double-Click Magic! ✨</div>
+      <div class="lesson-intro">Welcome back from your holiday! 🎉 Your brain is rested and ready to learn. This term we explore cool mouse tricks — starting with the DOUBLE CLICK! Ready for magic?</div>
+
+      <div class="activity-box act-learn">
+        <div class="activity-tag">📖 Double Click</div>
+        <div class="activity-title">Single vs. Double Click — What's the Difference?</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px;">
+          <div style="background:#e3f2fd;border-radius:12px;padding:14px;text-align:center;">
+            <div style="font-size:32px">🖱️</div>
+            <div style="font-family:'Fredoka One',cursive;font-size:16px;color:#0d47a1;">Single Click</div>
+            <div style="font-size:11px;color:#555;margin-top:4px;">Click ONE time. Used to <strong>select/highlight</strong> something. Like pointing at it!</div>
+          </div>
+          <div style="background:#fce4ec;border-radius:12px;padding:14px;text-align:center;">
+            <div style="font-size:32px">🖱️🖱️</div>
+            <div style="font-family:'Fredoka One',cursive;font-size:16px;color:#880e4f;">Double Click</div>
+            <div style="font-size:11px;color:#555;margin-top:4px;">Click TWO times FAST! Used to <strong>open</strong> programs and files. Like knocking on a door!</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="activity-box act-game">
+        <div class="activity-tag">🎮 Double-Click Game</div>
+        <div class="activity-title">Knock Knock — Open the Door! 🚪</div>
+        <div class="activity-desc" style="margin-bottom:10px;">Double-click (or tap twice fast) the doors to open them!</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;" id="door-game">
+          <div class="reveal-card" onclick="openDoor(this)" style="width:90px;height:110px;display:flex;align-items:center;justify-content:center;flex-direction:column;font-size:40px;">
+            <div class="reveal-hint">🚪</div>
+            <div class="reveal-content" style="font-size:30px;">🎁</div>
+          </div>
+          <div class="reveal-card" onclick="openDoor(this)" style="width:90px;height:110px;display:flex;align-items:center;justify-content:center;flex-direction:column;font-size:40px;">
+            <div class="reveal-hint">🚪</div>
+            <div class="reveal-content" style="font-size:30px;">⭐</div>
+          </div>
+          <div class="reveal-card" onclick="openDoor(this)" style="width:90px;height:110px;display:flex;align-items:center;justify-content:center;flex-direction:column;font-size:40px;">
+            <div class="reveal-hint">🚪</div>
+            <div class="reveal-content" style="font-size:30px;">🌈</div>
+          </div>
+          <div class="reveal-card" onclick="openDoor(this)" style="width:90px;height:110px;display:flex;align-items:center;justify-content:center;flex-direction:column;font-size:40px;">
+            <div class="reveal-hint">🚪</div>
+            <div class="reveal-content" style="font-size:30px;">🦁</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson-card u4-card">
+      <div class="lesson-week" style="color:#880e4f">🧩 Weeks 2–4</div>
+      <div class="lesson-title" style="color:#560027">Drag &amp; Drop — Catch and Place! 🤸</div>
+      <div class="lesson-intro">Drag and Drop is when you: 1) click and HOLD something, 2) MOVE it somewhere, 3) LET GO to drop it! It's like picking up a toy and putting it in a box.</div>
+
+      <div class="activity-box act-learn">
+        <div class="activity-tag">📖 How to Drag &amp; Drop</div>
+        <div class="activity-title">The 3 Steps of Drag &amp; Drop</div>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Click and HOLD</strong> — put your finger on the left mouse button and keep pressing. Don't let go yet! 🤏</div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-text"><strong>DRAG</strong> — while holding, slide the mouse to where you want to put the item. The item follows your mouse! ➡️</div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-text"><strong>DROP</strong> — when you are in the right place, let go of the mouse button. The item stays there! 🎯</div></div>
+        </div>
+      </div>
+
+      <div class="activity-box act-practice">
+        <div class="activity-tag">✏️ Sort &amp; Drop Game</div>
+        <div class="activity-title">Sort the Animals! 🐾</div>
+        <div class="activity-desc" style="margin-bottom:10px;">Drag each animal to the correct home!</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px;">
+          <div draggable="true" class="drag-item" ondragstart="dragStart(event)" data-id="fish" data-type="water">🐟 Fish</div>
+          <div draggable="true" class="drag-item" ondragstart="dragStart(event)" data-id="bird" data-type="sky">🐦 Bird</div>
+          <div draggable="true" class="drag-item" ondragstart="dragStart(event)" data-id="cat" data-type="land">🐱 Cat</div>
+          <div draggable="true" class="drag-item" ondragstart="dragStart(event)" data-id="shark" data-type="water">🦈 Shark</div>
+          <div draggable="true" class="drag-item" ondragstart="dragStart(event)" data-id="eagle" data-type="sky">🦅 Eagle</div>
+          <div draggable="true" class="drag-item" ondragstart="dragStart(event)" data-id="dog" data-type="land">🐶 Dog</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+          <div class="drag-area" ondragover="event.preventDefault();this.classList.add('over')" ondragleave="this.classList.remove('over')" ondrop="dropAnimal(event,this,'water')" style="flex-direction:column;align-items:flex-start;min-height:100px;">
+            <div style="font-weight:900;font-size:11px;color:#0288d1;margin-bottom:6px;">🌊 WATER</div>
+          </div>
+          <div class="drag-area" ondragover="event.preventDefault();this.classList.add('over')" ondragleave="this.classList.remove('over')" ondrop="dropAnimal(event,this,'sky')" style="flex-direction:column;align-items:flex-start;min-height:100px;">
+            <div style="font-weight:900;font-size:11px;color:#4fc3f7;margin-bottom:6px;">☁️ SKY</div>
+          </div>
+          <div class="drag-area" ondragover="event.preventDefault();this.classList.add('over')" ondragleave="this.classList.remove('over')" ondrop="dropAnimal(event,this,'land')" style="flex-direction:column;align-items:flex-start;min-height:100px;">
+            <div style="font-weight:900;font-size:11px;color:#4caf50;margin-bottom:6px;">🌳 LAND</div>
+          </div>
+        </div>
+        <div id="sort-msg" style="margin-top:8px;font-weight:700;font-size:13px;"></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════
+     UNIT 5 — MS PAINT
+═══════════════════════ -->
+<section class="unit-section" id="unit5">
+  <div class="unit-header u5-hdr">
+    <div class="unit-icon">🎨</div>
+    <div class="unit-header-text">
+      <div class="unit-label">Unit 5</div>
+      <div class="unit-title">Paint &amp; Draw Like an Artist!</div>
+      <div class="unit-month">📅 March – April</div>
+    </div>
+  </div>
+  <div class="unit-body">
+
+    <div class="lesson-card u5-card">
+      <div class="lesson-week" style="color:#4a148c">🎨 Weeks 1–2</div>
+      <div class="lesson-title" style="color:#4a148c">Open MS Paint — Our Art Studio! 🖌️</div>
+      <div class="lesson-intro">MS Paint is the computer's art studio! 🎨 It's a program where you can draw, paint, and create beautiful pictures using your mouse. Today we become digital artists!</div>
+
+      <div class="activity-box act-learn">
+        <div class="activity-tag">📖 Paint Tools</div>
+        <div class="activity-title">MS Paint Tools to Know 🛠️</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
+          <div style="background:#f3e5f5;border-radius:10px;padding:10px;">
+            <div style="font-size:22px">🖌️</div>
+            <div style="font-family:'Fredoka One',cursive;font-size:14px;color:#4a148c;">Brush Tool</div>
+            <div style="font-size:11px;color:#555;">Draw free lines and shapes. Like a real paintbrush!</div>
+          </div>
+          <div style="background:#e8f5e9;border-radius:10px;padding:10px;">
+            <div style="font-size:22px">🪣</div>
+            <div style="font-family:'Fredoka One',cursive;font-size:14px;color:#1b5e20;">Fill Bucket</div>
+            <div style="font-size:11px;color:#555;">Fills a whole area with color. Like a magic paint bucket!</div>
+          </div>
+          <div style="background:#e3f2fd;border-radius:10px;padding:10px;">
+            <div style="font-size:22px">⬜</div>
+            <div style="font-family:'Fredoka One',cursive;font-size:14px;color:#0d47a1;">Shape Tool</div>
+            <div style="font-size:11px;color:#555;">Draw perfect squares, circles, and rectangles!</div>
+          </div>
+          <div style="background:#fff3e0;border-radius:10px;padding:10px;">
+            <div style="font-size:22px">🧹</div>
+            <div style="font-family:'Fredoka One',cursive;font-size:14px;color:#e65100;">Eraser</div>
+            <div style="font-size:11px;color:#555;">Removes mistakes. Everyone makes mistakes — that's okay! 😊</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="activity-box act-creative">
+        <div class="activity-tag">🎨 Mini Paint Studio</div>
+        <div class="activity-title">Draw Right Here! 🖌️</div>
+        <div class="activity-desc" style="margin-bottom:10px;">Choose a color and draw on the canvas below!</div>
+        <div class="palette" id="paintPalette">
+          <div class="p-color active" style="background:#e91e63" onclick="selectColor(this,'#e91e63')"></div>
+          <div class="p-color" style="background:#f44336" onclick="selectColor(this,'#f44336')"></div>
+          <div class="p-color" style="background:#ff9800" onclick="selectColor(this,'#ff9800')"></div>
+          <div class="p-color" style="background:#ffeb3b" onclick="selectColor(this,'#ffeb3b')"></div>
+          <div class="p-color" style="background:#4caf50" onclick="selectColor(this,'#4caf50')"></div>
+          <div class="p-color" style="background:#2196f3" onclick="selectColor(this,'#2196f3')"></div>
+          <div class="p-color" style="background:#9c27b0" onclick="selectColor(this,'#9c27b0')"></div>
+          <div class="p-color" style="background:#795548" onclick="selectColor(this,'#795548')"></div>
+          <div class="p-color" style="background:#000000" onclick="selectColor(this,'#000000')"></div>
+          <div class="p-color" style="background:#ffffff;border:2px solid #ddd;" onclick="selectColor(this,'#ffffff')"></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+          <label style="font-size:12px;font-weight:700;">Brush Size:</label>
+          <input type="range" id="brushSize" min="3" max="30" value="8" style="flex:1;">
+          <span id="brushSizeVal" style="font-size:12px;font-weight:700;">8px</span>
+        </div>
+        <div class="canvas-wrap">
+          <canvas id="paintCanvas" width="520" height="300" style="width:100%;max-width:520px;cursor:crosshair;"></canvas>
+          <div class="canvas-tools">
+            <button class="tool-btn active" id="toolBrush" onclick="setTool('brush')">🖌️ Brush</button>
+            <button class="tool-btn" id="toolEraser" onclick="setTool('eraser')">🧹 Eraser</button>
+            <button class="tool-btn" onclick="clearCanvas()">🗑️ Clear All</button>
+            <button class="tool-btn" onclick="showToast('🎨 Beautiful artwork!')">✅ Done!</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson-card u5-card">
+      <div class="lesson-week" style="color:#4a148c">🎨 Weeks 3–4</div>
+      <div class="lesson-title" style="color:#4a148c">Draw Shapes &amp; Color Your House! 🏠</div>
+      <div class="lesson-intro">Shapes are everywhere! A square, a circle, a triangle — these simple shapes can become a house, a car, a robot — anything you can imagine! Let's build a house with shapes!</div>
+
+      <div class="activity-box act-learn">
+        <div class="activity-tag">📖 Shapes in MS Paint</div>
+        <div class="activity-title">How to Draw a Shape House in Paint</div>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-text">Click the <strong>Rectangle shape tool</strong>. Draw a big square for the house body. Click and drag! ⬜</div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-text">Draw a <strong>triangle on top</strong> for the roof using the triangle shape tool. 🔺</div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-text">Add a small <strong>rectangle</strong> for the door and two small squares for windows! 🚪🪟</div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-text">Use the <strong>Fill Bucket</strong> to add colors! Click inside each shape to fill it with your favorite color. 🪣🌈</div></div>
+        </div>
+      </div>
+
+      <div class="activity-box act-quiz">
+        <div class="activity-tag">🧠 Shape Quiz</div>
+        <div class="activity-title">What Shape Is It?</div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div>
+            <div class="quiz-q">🔵 Which shape has no corners?</div>
+            <div class="quiz-opts">
+              <div class="quiz-opt" onclick="answer(this,'no')">⬛ Square</div>
+              <div class="quiz-opt" onclick="answer(this,'yes')">⚫ Circle</div>
+              <div class="quiz-opt" onclick="answer(this,'no')">🔺 Triangle</div>
+            </div>
+          </div>
+          <div>
+            <div class="quiz-q">🏠 What shape is a roof?</div>
+            <div class="quiz-opts">
+              <div class="quiz-opt" onclick="answer(this,'no')">⬛ Square</div>
+              <div class="quiz-opt" onclick="answer(this,'no')">⚫ Circle</div>
+              <div class="quiz-opt" onclick="answer(this,'yes')">🔺 Triangle</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════
+     UNIT 6 — FINAL PROJECT
+═══════════════════════ -->
+<section class="unit-section" id="unit6">
+  <div class="unit-header u6-hdr">
+    <div class="unit-icon">🏆</div>
+    <div class="unit-header-text">
+      <div class="unit-label">Unit 6</div>
+      <div class="unit-title">Final Project &amp; Celebration! 🎉</div>
+      <div class="unit-month">📅 April – May</div>
+    </div>
+  </div>
+  <div class="unit-body">
+
+    <div class="lesson-card u6-card">
+      <div class="lesson-week" style="color:#006064">🏆 Weeks 1–2</div>
+      <div class="lesson-title" style="color:#004d40">My Paint Drawing — Final Project! 🖼️</div>
+      <div class="lesson-intro">This is your BIG moment! You have learned so much this year. Now it's time to create your FINAL PROJECT — a beautiful drawing using everything you have learned! Make it YOUR best work!</div>
+
+      <div class="activity-box act-learn">
+        <div class="activity-tag">📖 Project Steps</div>
+        <div class="activity-title">How to Make Your Final Project</div>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-text">Open <strong>MS Paint</strong> on the computer. Take a deep breath — you're an artist! 🎨</div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-text">Think of something you love — your family, your pet, your home, a rainbow, a spaceship! This will be your drawing. 💭</div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-text">Use the <strong>shapes tool</strong> and <strong>brush tool</strong> to draw your picture. Take your time! 🖌️</div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-text">Add lots of <strong>colors</strong> using the fill bucket. Make it bright and beautiful! 🌈</div></div>
+          <div class="step"><div class="step-num">5</div><div class="step-text"><strong>Save your work</strong> — click File, then Save. Give it your name! 💾</div></div>
+          <div class="step"><div class="step-num">6</div><div class="step-text"><strong>Print it out</strong> and show the class! Every artist gets a round of applause! 👏</div></div>
+        </div>
+      </div>
+
+      <div class="activity-box act-creative">
+        <div class="activity-tag">🎨 Final Drawing Canvas</div>
+        <div class="activity-title">Create Your Masterpiece Here! 🌟</div>
+        <div class="palette" id="finalPalette">
+          <div class="p-color active" style="background:#e91e63" onclick="selectColor2(this,'#e91e63')"></div>
+          <div class="p-color" style="background:#f44336" onclick="selectColor2(this,'#f44336')"></div>
+          <div class="p-color" style="background:#ff9800" onclick="selectColor2(this,'#ff9800')"></div>
+          <div class="p-color" style="background:#ffeb3b" onclick="selectColor2(this,'#ffeb3b')"></div>
+          <div class="p-color" style="background:#4caf50" onclick="selectColor2(this,'#4caf50')"></div>
+          <div class="p-color" style="background:#2196f3" onclick="selectColor2(this,'#2196f3')"></div>
+          <div class="p-color" style="background:#9c27b0" onclick="selectColor2(this,'#9c27b0')"></div>
+          <div class="p-color" style="background:#00bcd4" onclick="selectColor2(this,'#00bcd4')"></div>
+          <div class="p-color" style="background:#000000" onclick="selectColor2(this,'#000000')"></div>
+          <div class="p-color" style="background:#ffffff;border:2px solid #ddd;" onclick="selectColor2(this,'#ffffff')"></div>
+        </div>
+        <div class="canvas-wrap">
+          <canvas id="finalCanvas" width="520" height="340" style="width:100%;max-width:520px;cursor:crosshair;background:white;"></canvas>
+          <div class="canvas-tools">
+            <button class="tool-btn active" id="finalBrush" onclick="setTool2('brush')">🖌️ Brush</button>
+            <button class="tool-btn" id="finalEraser" onclick="setTool2('eraser')">🧹 Eraser</button>
+            <button class="tool-btn" onclick="clearCanvas2()">🗑️ Clear</button>
+            <button class="tool-btn" onclick="launchConfetti();showToast('🏆 MASTERPIECE COMPLETE!')">🏆 Finish!</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REVIEW QUIZ -->
+    <div class="lesson-card u6-card">
+      <div class="lesson-week" style="color:#006064">🏆 Big Review</div>
+      <div class="lesson-title" style="color:#004d40">Year-End Grand Quiz! 🌟</div>
+      <div class="lesson-intro">You have finished the whole book! Let's do one final big quiz to celebrate everything you learned this year. You are a Computer Champion! 🏆</div>
+
+      <div class="activity-box act-quiz">
+        <div class="activity-tag">🧠 Grand Final Quiz</div>
+        <div class="activity-title">Test Your Computer Knowledge!</div>
+
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div>
+            <div class="quiz-q">1. What do we call the moving arrow on the screen?</div>
+            <div class="quiz-opts">
+              <div class="quiz-opt" onclick="answer(this,'no')">🐍 A snake</div>
+              <div class="quiz-opt" onclick="answer(this,'yes')">👆 A cursor</div>
+              <div class="quiz-opt" onclick="answer(this,'no')">⬅️ A leftie</div>
+            </div>
+          </div>
+          <div>
+            <div class="quiz-q">2. Which key erases your last letter?</div>
+            <div class="quiz-opts">
+              <div class="quiz-opt" onclick="answer(this,'yes')">⌫ Backspace</div>
+              <div class="quiz-opt" onclick="answer(this,'no')">↵ Enter</div>
+              <div class="quiz-opt" onclick="answer(this,'no')">⎵ Spacebar</div>
+            </div>
+          </div>
+          <div>
+            <div class="quiz-q">3. What program do we use to draw pictures?</div>
+            <div class="quiz-opts">
+              <div class="quiz-opt" onclick="answer(this,'yes')">🎨 MS Paint</div>
+              <div class="quiz-opt" onclick="answer(this,'no')">📄 Microsoft Word</div>
+              <div class="quiz-opt" onclick="answer(this,'no')">🌐 The Internet</div>
+            </div>
+          </div>
+          <div>
+            <div class="quiz-q">4. What does the Spacebar do?</div>
+            <div class="quiz-opts">
+              <div class="quiz-opt" onclick="answer(this,'no')">🚀 Goes to space!</div>
+              <div class="quiz-opt" onclick="answer(this,'yes')">⎵ Makes a space between words</div>
+              <div class="quiz-opt" onclick="answer(this,'no')">🔠 Makes letters capital</div>
+            </div>
+          </div>
+          <div>
+            <div class="quiz-q">5. How do you open a program by double-clicking?</div>
+            <div class="quiz-opts">
+              <div class="quiz-opt" onclick="answer(this,'no')">👊 Hit the screen hard</div>
+              <div class="quiz-opt" onclick="answer(this,'no')">🖱️ Click once slowly</div>
+              <div class="quiz-opt" onclick="answer(this,'yes')">🖱️🖱️ Click twice fast!</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CERTIFICATE -->
+    <div class="certificate">
+      <div class="cert-title">🏆 Certificate of Achievement 🏆</div>
+      <div class="cert-sub">This certifies that</div>
+      <input id="certNameInput" placeholder="Write your name here..." style="font-family:'Fredoka One',cursive;font-size:24px;text-align:center;border:none;border-bottom:3px dashed var(--gold);background:transparent;outline:none;color:var(--pink);padding:4px 20px;width:100%;max-width:300px;" oninput="document.getElementById('certName').textContent=this.value||'Your Name ✨'">
+      <div id="certName" class="cert-name" style="margin:8px auto 12px;display:block;">Your Name ✨</div>
+      <div style="font-size:13px;color:#555;line-height:1.6;">
+        has successfully completed the<br>
+        <strong style="color:var(--navy);">KG ICT Curriculum 2026–2027</strong><br>
+        at Fanarah School 🏫
+      </div>
+      <div class="cert-seal">🌟 🎓 🌟</div>
+      <div style="margin-top:10px;">
+        <button class="big-btn" onclick="launchConfetti();showToast('🎓 Congratulations, Graduate!')">
+          Get My Certificate! 🎉
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div style="background:var(--navy);color:#7a9acc;text-align:center;padding:20px;font-size:11px;font-weight:700;letter-spacing:.08em;position:relative;z-index:1;">
+  FANARAH SCHOOL · COMPUTER STUDIES DEPARTMENT · ICT KG CURRICULUM 2026–2027 🖥️
+</div>
+
+<script>
+// ── STARS ──────────────────────────────────────
+const starsEl = document.getElementById('stars');
+const starChars = ['⭐','🌟','✨','💫','🌠'];
+for(let i=0;i<18;i++){
+  const s = document.createElement('span');
+  s.className = 'star';
+  s.textContent = starChars[Math.floor(Math.random()*starChars.length)];
+  s.style.left = Math.random()*100 + 'vw';
+  s.style.animationDuration = (8+Math.random()*12) + 's';
+  s.style.animationDelay = (-Math.random()*20) + 's';
+  s.style.fontSize = (12+Math.random()*14)+'px';
+  starsEl.appendChild(s);
+}
+
+// ── SCROLL ────────────────────────────────────
+function scrollTo(id){
+  document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ── TOAST ────────────────────────────────────
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+// ── QUIZ ANSWERS ─────────────────────────────
+function answer(el, correct){
+  const opts = el.parentElement.querySelectorAll('.quiz-opt');
+  opts.forEach(o=>o.style.pointerEvents='none');
+  if(correct==='yes'){
+    el.classList.add('correct');
+    showToast('✅ Correct! You are so smart! 🌟');
+    launchMini();
+  } else {
+    el.classList.add('wrong');
+    // highlight correct
+    opts.forEach(o=>{if(o.dataset.correct==='yes')o.classList.add('correct');});
+    showToast('🤔 Not quite — try to remember!');
+  }
+}
+
+// ── POSTURE CHECK ─────────────────────────────
+function checkPosture(){
+  const checks = document.querySelectorAll('#posture-checks input');
+  const count = [...checks].filter(c=>c.checked).length;
+  const msg = document.getElementById('posture-msg');
+  const stars = ['','⭐','⭐⭐','⭐⭐⭐','🌟 PERFECT POSTURE! You are a Computer Superhero! 🦸'];
+  msg.textContent = count > 0 ? stars[count] : '';
+  msg.style.color = count===4 ? '#2e7d32' : '#f57c00';
+  if(count===4){launchMini();showToast('🦸 Perfect Posture Champion!');}
+}
+
+// ── MATCH GAME ───────────────────────────────
+let matchSelected = null;
+let matchScore = 0;
+function matchClick(el, side){
+  if(el.classList.contains('matched')) return;
+  if(!matchSelected){
+    matchSelected = {el, side};
+    el.classList.add('selected');
+  } else {
+    if(matchSelected.side === side){
+      matchSelected.el.classList.remove('selected');
+      matchSelected = {el, side};
+      el.classList.add('selected');
+      return;
+    }
+    if(matchSelected.el.dataset.id === el.dataset.id){
+      matchSelected.el.classList.remove('selected');
+      matchSelected.el.classList.add('matched');
+      el.classList.add('matched');
+      matchScore++;
+      document.getElementById('match-score').textContent = '✅ '.repeat(matchScore) + (matchScore===4?' 🎉 All matched!':'');
+      if(matchScore===4){showToast('🎉 Perfect Match! All correct!');}
+    } else {
+      matchSelected.el.classList.add('wrong');
+      el.classList.add('wrong');
+      setTimeout(()=>{
+        matchSelected.el.classList.remove('wrong','selected');
+        el.classList.remove('wrong');
+      },500);
+    }
+    matchSelected = null;
+  }
+}
+
+// ── STAR CLICK GAME ──────────────────────────
+let starCount = 0;
+function startStarGame(){
+  const area = document.getElementById('star-game');
+  area.innerHTML = '<div id="star-score" style="position:absolute;top:8px;right:12px;font-weight:900;font-size:13px;color:#0d47a1;">Stars: 0</div>';
+  starCount = 0;
+  for(let i=0;i<8;i++) spawnStar(area);
+}
+function spawnStar(area){
+  const s = document.createElement('div');
+  s.style.cssText = `position:absolute;font-size:28px;cursor:pointer;user-select:none;transition:transform .1s;`;
+  s.style.left = (5+Math.random()*80)+'%';
+  s.style.top = (5+Math.random()*70)+'%';
+  s.textContent = '⭐';
+  s.onclick = function(){
+    s.remove(); starCount++;
+    const sc = area.querySelector('#star-score');
+    if(sc) sc.textContent='Stars: '+starCount;
+    if(starCount>=8){showToast('🌟 You caught all 8 stars! Amazing!');}
+    else spawnStar(area);
+  };
+  area.appendChild(s);
+}
+
+// ── BALLOONS ─────────────────────────────────
+const balloonColors = ['#e91e63','#2196f3','#4caf50','#ff9800','#9c27b0','#f44336','#00bcd4'];
+function spawnBalloons(){
+  const area = document.getElementById('balloon-area');
+  area.innerHTML = '';
+  for(let i=0;i<6;i++){
+    const b = document.createElement('div');
+    b.style.cssText = `font-size:38px;cursor:pointer;transition:all .15s;user-select:none;`;
+    b.textContent = '🎈';
+    b.onclick = function(){
+      b.textContent = '💥';
+      setTimeout(()=>b.remove(),300);
+      showToast('POP! 💥');
+    };
+    area.appendChild(b);
+  }
+}
+
+// ── KEYBOARD TYPING ──────────────────────────
+let kbText = '';
+function typeKey(k){
+  if(k==='⌫'){kbText=kbText.slice(0,-1);}
+  else kbText+=k;
+  const out = document.getElementById('kb-output');
+  out.textContent = kbText || '_';
+  // Animate key
+}
+
+// ── NAME DISPLAY ─────────────────────────────
+let nameColor = '#e91e63';
+function updateNameDisplay(){
+  const v = document.getElementById('name-input').value;
+  const d = document.getElementById('name-display');
+  d.textContent = v || '👤';
+}
+function celebrateName(){
+  const v = document.getElementById('name-input').value;
+  if(v.trim()){launchConfetti();showToast('🌟 Beautiful name, '+v+'!');}
+  else showToast('📝 Type your name first!');
+}
+
+// ── NAME ART ─────────────────────────────────
+let artColor = '#e91e63';
+function selectNameColor(el, color){
+  artColor = color;
+  document.querySelectorAll('#nameColorPicker .color-swatch').forEach(s=>s.classList.remove('selected'));
+  el.classList.add('selected');
+  updateNameArt();
+}
+function updateNameArt(){
+  const v = document.getElementById('nameArt').value;
+  const d = document.getElementById('nameArtDisplay');
+  d.style.color = artColor;
+  d.textContent = v || 'Your Name! ✨';
+}
+
+// ── DOOR GAME ────────────────────────────────
+function openDoor(el){
+  el.classList.add('open');
+  showToast('🎉 Door opened!');
+  launchMini();
+}
+
+// ── DRAG & DROP ANIMALS ──────────────────────
+let draggedEl = null, draggedType = null;
+function dragStart(e){
+  draggedEl = e.target;
+  draggedType = e.target.dataset.type;
+  e.dataTransfer.effectAllowed = 'move';
+}
+let sortedCount = 0;
+function dropAnimal(e, area, type){
+  e.preventDefault();
+  area.classList.remove('over');
+  if(!draggedEl) return;
+  if(draggedType === type){
+    const clone = draggedEl.cloneNode(true);
+    clone.style.cursor='default';
+    clone.removeAttribute('draggable');
+    clone.style.border='2px solid #4caf50';
+    clone.style.background='#e8f5e9';
+    area.appendChild(clone);
+    draggedEl.style.opacity='.3';
+    draggedEl.style.pointerEvents='none';
+    sortedCount++;
+    showToast('✅ Correct home!');
+    if(sortedCount>=6){setTimeout(()=>{showToast('🎉 All animals sorted! Great job!');launchConfetti();},300);}
+  } else {
+    area.style.background='#ffebee';
+    setTimeout(()=>area.style.background='',500);
+    showToast('❌ Wrong home — try again!');
+  }
+  draggedEl = null;
+}
+
+// ── PAINT CANVAS ─────────────────────────────
+let paintColor = '#e91e63', paintTool = 'brush';
+let painting = false;
+const canvas1 = document.getElementById('paintCanvas');
+const ctx1 = canvas1 ? canvas1.getContext('2d') : null;
+function initCanvas(canvas, ctx){
+  if(!canvas||!ctx) return;
+  ctx.fillStyle = 'white';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  let down = false, lastX=0, lastY=0;
+  function getPos(e){
+    const r=canvas.getBoundingClientRect();
+    const scaleX=canvas.width/r.width, scaleY=canvas.height/r.height;
+    const cx=(e.touches?e.touches[0].clientX:e.clientX)-r.left;
+    const cy=(e.touches?e.touches[0].clientY:e.clientY)-r.top;
+    return [cx*scaleX, cy*scaleY];
+  }
+  function startDraw(e){e.preventDefault();down=true;[lastX,lastY]=getPos(e);ctx.beginPath();ctx.moveTo(lastX,lastY);}
+  function draw(e){
+    if(!down) return; e.preventDefault();
+    const [x,y]=getPos(e);
+    const bs = parseInt(document.getElementById('brushSize')?.value||8);
+    ctx.lineWidth = (canvas.id==='finalCanvas'?10:bs);
+    ctx.lineCap='round';ctx.lineJoin='round';
+    const tool = canvas.id==='finalCanvas'?finalTool:paintTool;
+    ctx.strokeStyle = tool==='eraser'?'white':paintColor;
+    ctx.lineTo(x,y);ctx.stroke();ctx.beginPath();ctx.moveTo(x,y);
+    lastX=x;lastY=y;
+  }
+  function endDraw(){down=false;ctx.beginPath();}
+  canvas.addEventListener('mousedown',startDraw);
+  canvas.addEventListener('mousemove',draw);
+  canvas.addEventListener('mouseup',endDraw);
+  canvas.addEventListener('mouseleave',endDraw);
+  canvas.addEventListener('touchstart',startDraw,{passive:false});
+  canvas.addEventListener('touchmove',draw,{passive:false});
+  canvas.addEventListener('touchend',endDraw);
+}
+document.getElementById('brushSize')?.addEventListener('input',function(){
+  document.getElementById('brushSizeVal').textContent=this.value+'px';
+});
+function selectColor(el,c){
+  paintColor=c;
+  document.querySelectorAll('#paintPalette .p-color').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+}
+function setTool(t){
+  paintTool=t;
+  document.getElementById('toolBrush').classList.toggle('active',t==='brush');
+  document.getElementById('toolEraser').classList.toggle('active',t==='eraser');
+}
+function clearCanvas(){if(ctx1){ctx1.fillStyle='white';ctx1.fillRect(0,0,canvas1.width,canvas1.height);}}
+
+let finalTool='brush', finalColor='#e91e63';
+const canvas2=document.getElementById('finalCanvas');
+const ctx2=canvas2?canvas2.getContext('2d'):null;
+function selectColor2(el,c){
+  paintColor=c; finalColor=c;
+  document.querySelectorAll('#finalPalette .p-color').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+}
+function setTool2(t){
+  finalTool=t;
+  document.getElementById('finalBrush').classList.toggle('active',t==='brush');
+  document.getElementById('finalEraser').classList.toggle('active',t==='eraser');
+}
+function clearCanvas2(){if(ctx2){ctx2.fillStyle='white';ctx2.fillRect(0,0,canvas2.width,canvas2.height);}}
+
+window.addEventListener('load',()=>{
+  if(canvas1&&ctx1) initCanvas(canvas1,ctx1);
+  if(canvas2&&ctx2) initCanvas(canvas2,ctx2);
+});
+
+// ── CONFETTI ─────────────────────────────────
+function launchConfetti(){
+  const c=document.getElementById('confetti-canvas');
+  const ctx=c.getContext('2d');
+  c.width=window.innerWidth;c.height=window.innerHeight;
+  const pieces=[];
+  const colors=['#ffb300','#e91e63','#2196f3','#4caf50','#9c27b0','#ff9800','#00bcd4'];
+  for(let i=0;i<80;i++){
+    pieces.push({
+      x:Math.random()*c.width,y:-10,
+      r:4+Math.random()*6,
+      d:2+Math.random()*3,
+      color:colors[Math.floor(Math.random()*colors.length)],
+      tilt:Math.random()*20-10,
+      tiltA:0.1+Math.random()*.1
+    });
+  }
+  let frame=0;
+  function draw(){
+    ctx.clearRect(0,0,c.width,c.height);
+    pieces.forEach(p=>{
+      ctx.fillStyle=p.color;
+      ctx.beginPath();
+      ctx.ellipse(p.x,p.y,p.r,p.r/2,p.tilt,0,Math.PI*2);
+      ctx.fill();
+      p.y+=p.d;p.x+=Math.sin(frame*.05)*1.5;p.tilt+=p.tiltA;
+    });
+    frame++;
+    if(frame<120)requestAnimationFrame(draw);
+    else ctx.clearRect(0,0,c.width,c.height);
+  }
+  draw();
+}
+function launchMini(){
+  const c=document.getElementById('confetti-canvas');
+  const ctx=c.getContext('2d');
+  c.width=window.innerWidth;c.height=window.innerHeight;
+  const pieces=[];
+  const colors=['#ffb300','#e91e63','#2196f3','#4caf50'];
+  for(let i=0;i<25;i++){
+    pieces.push({x:c.width/2+(Math.random()-0.5)*200,y:c.height/2,r:3+Math.random()*4,d:1.5+Math.random()*2,color:colors[Math.floor(Math.random()*colors.length)],tilt:Math.random()*20-10,tiltA:.1});
+  }
+  let frame=0;
+  function draw(){
+    ctx.clearRect(0,0,c.width,c.height);
+    pieces.forEach(p=>{ctx.fillStyle=p.color;ctx.beginPath();ctx.ellipse(p.x,p.y,p.r,p.r/2,p.tilt,0,Math.PI*2);ctx.fill();p.y+=p.d;p.x+=Math.sin(frame*.1)*2;p.tilt+=p.tiltA;});
+    frame++;
+    if(frame<50)requestAnimationFrame(draw);
+    else ctx.clearRect(0,0,c.width,c.height);
+  }
+  draw();
+}
+
+// Init balloons
+spawnBalloons();
+startStarGame();
+</script>
+</body>
+</html>
